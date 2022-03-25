@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class dbConnection {
 
@@ -103,6 +104,44 @@ public class dbConnection {
 			ps = con.prepareStatement("Delete from address where addressId = ?");
 			ps.setString(1, AddressId);
 			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Vector<String> getIduser() {
+		Vector<String> id = new Vector<String>();
+		
+		try {
+			ps = con.prepareStatement("Select USERID from user");
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				id.add(rs.getObject(1).toString());
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return id;
+	}
+	
+	public void getDatauser(String id) {
+		try {
+			ps = con.prepareStatement("Select USERNAME,PASSWORD from user where USERID = ?");
+			ps.setString(1, id);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getObject(1));				
+				System.out.println(rs.getObject(2));				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
